@@ -1,3 +1,5 @@
+This is a BGT script that does exactly what the readme tells you to do below.
+# Rob wrote
 # Swearclock
 # This is not the actual swear clock code - simply the output of running it 2000 times with duplicates removed 
 # - which comes out at 1700 or so
