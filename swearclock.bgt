@@ -1,0 +1,17 @@
+//BGT port made by Patrick Wilson.
+#include"global.bgt"
+string fn="swearclock.txt";
+file f;
+tts_voice v;
+void main() {
+if(init_nvda()==false) {
+alert("Error","There was an error copying NVDA to the temp directory.");
+exit();
+}
+f.open(fn,"rb");
+string[]d=string_split(f.read(),"\r\n",false);
+f.close();
+string result=string_replace(d[random(0,d.length()-1)],"_time_",get_time(true,false),true);
+speak(result);
+//clipboard_copy_text(result);
+}
