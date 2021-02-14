@@ -1,17 +1,70 @@
 //BGT port made by Patrick Wilson.
-#include"global.bgt"
 string fn="swearclock.txt";
 file f;
 tts_voice v;
 void main() {
-if(init_nvda()==false) {
-alert("Error","There was an error copying NVDA to the temp directory.");
-exit();
-}
 f.open(fn,"rb");
 string[]d=string_split(f.read(),"\r\n",false);
 f.close();
 string result=string_replace(d[random(0,d.length()-1)],"_time_",get_time(true,false),true);
-speak(result);
+v.speak_wait(result);
 //clipboard_copy_text(result);
 }
+
+
+//An exact copy of the date and time script from global.bgt but in here so you don't have to download stuff again.
+
+string included;
+string seconds;
+string included2;
+string time;
+string date;
+string ampm;
+int hour2;
+string get_time(bool twelvehour=true, bool include_seconds=true) {
+time="";
+if (TIME_SECOND<10) {
+included2="0";
+}
+else {
+included2="";
+}
+if (TIME_MINUTE<=9) {
+included="0";
+}
+else {
+included="";
+}
+if (TIME_HOUR<12) {
+ampm="AM";
+}
+if (TIME_HOUR>=12) {
+hour2=TIME_HOUR-12;
+ampm="PM";
+}
+if (TIME_HOUR==0) {
+hour2=12;
+}
+if (TIME_HOUR>0 and TIME_HOUR<=12) {
+hour2=TIME_HOUR;
+}
+seconds=TIME_SECOND;
+if (twelvehour==true) {
+if (include_seconds==true) {
+time=hour2+":"+included+TIME_MINUTE+":"+included2+seconds+" "+ampm;
+}
+else {
+time=hour2+":"+included+TIME_MINUTE+" "+ampm;
+}
+}
+else {
+if (include_seconds==true) {
+time=TIME_HOUR+":"+included+TIME_MINUTE+":"+included2+seconds;
+}
+else {
+time=TIME_HOUR+":"+included+TIME_MINUTE;
+}
+}
+return time;
+}
+
